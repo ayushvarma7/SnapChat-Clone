@@ -17,7 +17,7 @@ function WebcamCapture() {
     const capture = useCallback(() => {
             const imageSrc= webcamRef.current.getScreenshot();
             console.log(imageSrc);
-            setImage(imageSrc); //stores the image captured through the cam
+            // setImage(imageSrc); //stores the image captured through the cam
             //to image using the setImage hook
         },
         [webcamRef], //this is the dependency of this fn
@@ -38,7 +38,7 @@ function WebcamCapture() {
                 onClick={capture}
                 fontSize="large" 
             />
-            <img src={image} alt="image captured"/> renders the image
+            {/* <img src={image} alt="image captured"/> renders the image */}
         </div>
     )
 }
