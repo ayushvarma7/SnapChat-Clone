@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="app">
     LET'S BUILD SNAPCHAT
-    <WebcamCapture/>
+    {/* <WebcamCapture/>   */}
     </div>
   );
 }
