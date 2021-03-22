@@ -2,9 +2,12 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { resetCameraImage, selectCameraImage } from './features/cameraSlice';
-import './Preview.css';
 import { AttachFile, Close, Create, Crop, MusicNote, Note, Send, TextFields, Timer } from '@material-ui/icons';
-
+import {v4 as uuid} from 'uuid';
+import { db, storage } from './firebase';
+import firebase from 'firebase';
+import './Preview.css';
+ 
 function Preview() {
     const cameraImage= useSelector(selectCameraImage);
     //calling the camImage fn which stores the SS in cameraImage
@@ -13,16 +16,42 @@ function Preview() {
     
     useEffect(()=>{
     if(!cameraImage){ //if no image captured
-        history.replace('/'); //routes back to / path
+        history.replace("/"); //routes back to / path
     }
     }, [cameraImage, history]); //dependent on cameraImage, history
 
     const closePreview=()=>{
-        dispatch(resetCameraImage());
+        dispatch(resetCameraImage()); 
     }
 
     const sendPost= ()=>{
-        
+        const id= uuid(); 
+        const uploadTask= storage  //uploads to firebase storage
+        .ref(`posts/${id}`)
+        .putString(cameraImage, "data_url");
+
+        uploadTask.on(`state_changed`, null, (error)=> {
+            // ERROR FUNCTION
+            console.log(error);
+        }, 
+        ()=>{
+            // COMPLETE FUNCTION 
+            storage.ref('posts')
+            .child(id)
+            .getDownloadURL()
+            .then((url)=>{
+                db.collection('posts').add({
+                   imageUrl: url,
+                   username: "Ayush",
+                   read: false,
+                   //profilePic
+                   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                   //gives us a consistent timestamp throughout the world
+                });
+                history.replace('/chats');
+                // directs to the chat screen
+            })
+        })
     }
     return (
         <div className="preview">
