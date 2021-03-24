@@ -33,7 +33,10 @@ function Chat({ id, profilePic, username,
             <Avatar className="chat__avatar" src={profilePic} />{/*renders from the passed props*/}
             <div className="chat__info">
                 <h4>{username}</h4>
-                <p>Tap to view -<ReactTimeago date={new Date(timestamp?.toDate()).toUTCString()} /></p>
+                <p>
+                {!read && "Tap to view -"}{" "}  {/* if not read then show 'Tap to view'  */}
+                <ReactTimeago date={new Date(timestamp?.toDate()).toUTCString()} />
+                </p>
                 {/* ReactTimeago is used to calculate time since the object was sent  */}
             </div> 
             {!read && <StopRounded className="chat__readIcon" />}
