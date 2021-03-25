@@ -6,3 +6,23 @@
     background-color: #fefc01;
     height: 100vh;
   }
+
+  .app__logo{
+    object-fit: contain;
+    height: 100px;
+  }
+ 
+    /* .app__body{
+      background: url("https://www.kindpng.com/picc/m/478-4787232_iphone-x-frame-svg-hd-png-download.png") 
+      no-repeat center;
+      background-size: contain;
+      height: 400px;
+      width: 260px;
+      padding: 150px;
+      
+    } */
+
+  .app__bodyBackground{
+    background-color: white;
+    height: 400px;
+  }

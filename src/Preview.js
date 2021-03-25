@@ -7,13 +7,15 @@ import {v4 as uuid} from 'uuid';
 import { db, storage } from './firebase';
 import firebase from 'firebase';
 import './Preview.css';
+import { selectUser } from './features/appSlice';
  
 function Preview() {
     const cameraImage= useSelector(selectCameraImage);
     //calling the camImage fn which stores the SS in cameraImage
     const history= useHistory(); 
     const dispatch = useDispatch();
-    
+    const user= useSelector(selectUser);
+
     useEffect(()=>{
     if(!cameraImage){ //if no image captured
         history.replace("/"); //routes back to / path
@@ -44,7 +46,7 @@ function Preview() {
                    imageUrl: url,
                    username: "Ayush",
                    read: false,
-                   //profilePic
+                   profilePic: user.profilePic,
                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                    //gives us a consistent timestamp throughout the world
                 });
